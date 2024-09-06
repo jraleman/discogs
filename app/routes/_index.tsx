@@ -1,6 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
 import { LoaderFunction } from "@remix-run/node";
-import Collection from "~/components/Collection";
+import Collection from "~/containers/Collection";
 import { DISCOGS_USERNAME } from "~/utils/constants";
 import { fetchCollection, fetchCollectionValue } from "~/utils/helpers";
 

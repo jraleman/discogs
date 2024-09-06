@@ -57,11 +57,15 @@ export async function fetchCollectionValue(username: string) {
   return data;
 }
 
+export async function fetchCurrencyRate(fromCurrency: string, toCurrency: string) {
+  const response = await fetch(`${CURRENCY_BASE_URL}/${fromCurrency}`);
+  const data = await response.json();
+  const rate = data.rates[toCurrency];
+  return rate;
+}
+
 export function currencyStringToNumber(currency: string): number {
-  // Remove all non-numeric characters except for decimal point
   const cleaned = currency.replace(/[^0-9.-]+/g, "");
-  
-  // Convert to a number
   return parseFloat(cleaned);
 }
 
@@ -69,9 +73,6 @@ export function formatCurrency(amount: number, currency: string) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(amount);
 }
 
-export async function convertCurrency(amount: number, fromCurrency: string, toCurrency: string) {
-  const response = await fetch(`${CURRENCY_BASE_URL}/${fromCurrency}`);
-  const data = await response.json();
-  const rate = data.rates[toCurrency];
+export function convertCurrency(amount: number, rate: number) {
   return amount * rate;
 }
