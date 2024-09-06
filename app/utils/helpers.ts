@@ -1,7 +1,7 @@
-import { BASE_URL, API_TOKEN } from "./constants";
+import { DISCOGS_BASE_URL, DISCOGS_API_TOKEN, CURRENCY_BASE_URL } from "./constants";
 
 const headers = {
-  'Authorization': `Discogs token=${API_TOKEN}`
+  'Authorization': `Discogs token=${DISCOGS_API_TOKEN}`
 };
 
 export function delay(ms: number) {
@@ -9,7 +9,7 @@ export function delay(ms: number) {
 }
 
 export async function fetchCollectionPage(username: string, page: number) {
-  const response = await fetch(`${BASE_URL}/users/${username}/collection/folders/0/releases?page=${page}&per_page=50`, { headers });
+  const response = await fetch(`${DISCOGS_BASE_URL}/users/${username}/collection/folders/0/releases?page=${page}&per_page=50`, { headers });
   
   if (!response.ok) {
     throw new Error(response.statusText);
@@ -47,7 +47,7 @@ export async function fetchCollection(username: string) {
 }
 
 export async function fetchCollectionValue(username: string) {
-  const response = await fetch(`${BASE_URL}/users/${username}/collection/value`, { headers });
+  const response = await fetch(`${DISCOGS_BASE_URL}/users/${username}/collection/value`, { headers });
   
   if (!response.ok) {
     throw new Error(response.statusText);
@@ -55,4 +55,23 @@ export async function fetchCollectionValue(username: string) {
 
   const data = await response.json();
   return data;
+}
+
+export function currencyStringToNumber(currency: string): number {
+  // Remove all non-numeric characters except for decimal point
+  const cleaned = currency.replace(/[^0-9.-]+/g, "");
+  
+  // Convert to a number
+  return parseFloat(cleaned);
+}
+
+export function formatCurrency(amount: number, currency: string) {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(amount);
+}
+
+export async function convertCurrency(amount: number, fromCurrency: string, toCurrency: string) {
+  const response = await fetch(`${CURRENCY_BASE_URL}/${fromCurrency}`);
+  const data = await response.json();
+  const rate = data.rates[toCurrency];
+  return amount * rate;
 }
