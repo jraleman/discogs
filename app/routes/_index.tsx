@@ -2,11 +2,12 @@ import type { MetaFunction } from "@remix-run/node";
 import { LoaderFunction } from "@remix-run/node";
 import Collection from "~/components/Collection";
 import { USERNAME } from "~/utils/constants";
-import { fetchCollection } from "~/utils/helpers";
+import { fetchCollection, fetchCollectionValue } from "~/utils/helpers";
 
 export const loader: LoaderFunction = async () => {
   const collection = await fetchCollection(USERNAME);
-  return { collection };
+  const value = await fetchCollectionValue(USERNAME)
+  return { collection, value };
 };
 
 export const meta: MetaFunction = () => {
