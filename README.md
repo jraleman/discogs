@@ -59,16 +59,6 @@ This will cover setting up the project, interacting with the Discogs API, and in
 
 Although you aim to use vanilla JavaScript as much as possible, some libraries can streamline the process:
 
-- **Discogs API client**: Install a Discogs API client library to handle API calls:
-  ```bash
-  npm install disconnect
-  ```
-
-- **i18n**: Use `react-i18next` for internationalization (i18n):
-  ```bash
-  npm install react-i18next i18next
-  ```
-
 - **Testing**: Use `jest` and `react-testing-library` for unit and component testing:
   ```bash
   npm install jest @testing-library/react @testing-library/jest-dom
@@ -77,11 +67,6 @@ Although you aim to use vanilla JavaScript as much as possible, some libraries c
 - **i18n**: Use `react-i18next` for internationalization (i18n):
   ```bash
   npm install react-i18next i18next
-  ```
-
-- **Testing**: Use `jest` and `react-testing-library` for unit and component testing:
-  ```bash
-  npm install jest @testing-library/react @testing-library/jest-dom
   ```
 
 ### Step 2: Setting Up Discogs API Access with Fetch
@@ -95,11 +80,15 @@ Here's the updated code for fetching data using `fetch`:
 
 ### Step 3: Fetching the Discogs Collection using `fetch`
 
-In your `app/utils/discogs.ts` file, you can create the `fetchCollection` function using vanilla JavaScript's `fetch` method:
+Create a file called `app/utils/constants.ts`, and define the base URL
 
 ```typescript
-const DISCOGS_API_URL = 'https://api.discogs.com';
+export const DISCOGS_API_URL = 'https://api.discogs.com';
+```
 
+In your `app/utils/helpers.ts` file, you can create the `fetchCollection` function using vanilla JavaScript's `fetch` method:
+
+```typescript
 export async function fetchCollection(username: string) {
   const response = await fetch(`${DISCOGS_API_URL}/users/${username}/collection/folders/0/releases`, {
     headers: {
