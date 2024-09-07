@@ -3,6 +3,7 @@ import { useState } from "react";
 import { convertCurrency, currencyStringToNumber, fetchCurrencyRate, formatCurrency } from "~/utils/helpers";
 import CurrencyDropdown from "~/components/CurrencyDropdown";
 import RecordFilter from "~/components/RecordFilter";
+import CollectionStats from "~/components/CollectionStats";
 
 export default function Collection() {
   const { collection, value } = useLoaderData<{ collection: any[], value: any }>();
@@ -54,27 +55,26 @@ export default function Collection() {
       setFilteredRecords(filtered);
     };
 
-    const albumArtStyle = {
-      width: '200px',
-      height: '200px',
-    };
-
     return (
-      <div>
-        <RecordFilter onSearch={handleSearch} />
-        <h2>💽 {filteredRecords.length} / {stats.count}</h2>
-        <CurrencyDropdown onCurrencyChange={handleCurrencyChange} />
-        <h2>💸 {stats.min} | 💰 {stats.med} | 🤑 {stats.max}</h2>
-        {filteredRecords.map((record: any) => (
-          <div key={record.id}>
-            <hr />
-            <h3>{record.basic_information.title}</h3>
-            <h4>{record.basic_information.artists[0].name}</h4>
-            <h5>{record.basic_information.year}</h5>
-            <h6>{record.basic_information.genres.join(", ")}</h6>
-            <img style={albumArtStyle} src={record.basic_information.cover_image} alt={record.basic_information.title} />
-          </div>
-        ))}
+      <div className="m-4">
+        <div className="mx-auto max-w-screen-xl">
+          <RecordFilter onSearch={handleSearch} />
+          <CurrencyDropdown onCurrencyChange={handleCurrencyChange} />
+          <CollectionStats filteredCount={filteredRecords.length} {...stats} />
+        </div>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4 py-8 mx-auto max-w-screen-xl lg:py-16 justify-items-center">
+          {filteredRecords.map((record: any) => (
+            <div key={record.id} className="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+              <img className=" rounded-t-lg max-h-80" src={record.basic_information.cover_image} alt={record.basic_information.title} />
+              <div className="p-5">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{record.basic_information.title}</h5>
+                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{record.basic_information.artists[0].name}</p>
+                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{record.basic_information.year}</p>
+                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{record.basic_information.genres.join(", ")}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
 }
