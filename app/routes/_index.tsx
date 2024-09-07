@@ -19,7 +19,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="font-sans p-4 bg-gray-900 dark:bg-gray-900">
+    <div className="min-w-fit font-sans p-4 bg-gray-900 dark:bg-gray-900">
       <h1 className="mt-10 tracking-wide text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
         🎶 🎧 My Records Collection
       </h1>
