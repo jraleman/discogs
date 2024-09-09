@@ -42,3 +42,10 @@ Make sure to deploy the output of `npm run build`
 ## Styling
 
 This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+
+## TODO
+
+- Implement more unit tests
+- Integrate code formatter and linter, use codium to generate comments for stuff
+- Add support for "Wantlist" endpoint API from Discogs
+- Add "more info" button about a record, use LLM to generate record info
